@@ -1,0 +1,71 @@
+import pandas as pd import numpy as np import matplotlib.pyplot as plt import seaborn as  
+sns from sklearn.model_selection import train_test_split from sklearn.preprocessing  
+import LabelEncoder, StandardScaler from sklearn.linear_model import LogisticRegression  
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_score 
+# Load the dataset df = pd.read_csv("# prompt: create bar chat in give data set
+import matplotlib.pyplot as plt import seaborn as  
+sns import pandas as pd # Import pandas 
+# Load the dataset (if not already loaded) 
+df = pd.read_csv("/content/sample_data/WA_Fn-UseC_-Telco-Customer-Churn.csv") # Load the dataframe 
+# Assuming 'performance' column exists in your DataFrame 'df' # If not, you might need to  recreate the performance column here def performance_category(iheart_rate_bpm): if  iheart_rate_bpm>=120: 
+ return "High" elif iheart_rate_bpm  
+>= 60: 
+ return "medium" else: 
+ return "Low" 
+df ["performance"] = df["MonthlyCharges"].apply(performance_category) # Recreate the  'performance' column 
+plt.figure(figsize=(8, 6)) sns.countplot(x='performance', data=df)  
+plt.title('Performance Category Counts') plt.xlabel('Performance Category')  
+plt.ylabel('Count') plt.show()") 
+# Display basic info print(df.head())  
+print(df.info()) 
+# Drop customer ID column df.drop("customerID", axis=1,  
+inplace=True) 
+# Replace empty strings and convert TotalCharges to numeric df["TotalCharges"] =  pd.to_numeric(df["TotalCharges"], errors='coerce') df["TotalCharges"].fillna(df["TotalCharges"].median(),  inplace=True)
+# Convert categorical variables to numeric for column in  
+df.select_dtypes(include=['object']).columns: if df[column].nunique() == 2: 
+ df[column] = LabelEncoder().fit_transform(df[column]) else: df =  
+pd.get_dummies(df, columns=[column]) 
+# Define features and target X =  
+df.drop("Churn", axis=1) y = df["Churn"] 
+# Split the data 
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42) 
+# Feature scaling scaler = StandardScaler() X_train =  
+scaler.fit_transform(X_train) X_test =  
+scaler.transform(X_test) 
+# Model training model =  
+LogisticRegression() model.fit(X_train,  
+y_train) 
+# Predictions y_pred =  
+model.predict(X_test) 
+# Evaluation print("Accuracy Score:", accuracy_score(y_test, y_pred)) print("Confusion Matrix:\n",  confusion_matrix(y_test, y_pred)) print("Classification Report:\n", classification_report(y_test, y_pred)) 
+print(df.isnull().sum()) df_cleaned = df.dropna() 
+print(df_cleaned) def  
+performance_category(iheart_rate_bpm):
+ if iheart_rate_bpm>=120: 
+ return "High" elif iheart_rate_bpm  
+>= 60: 
+ return "medium" else: 
+ return "Low" # Assuming the correct column name is 'MonthlyCharges' or a similar numerical column # Please update  to the correct column name from your dataset df ["performance"] = df["MonthlyCharges"].apply(performance_category)  print(df) # prompt: create simple bar chart 
+import matplotlib.pyplot as plt import  
+seaborn as sns import pandas as pd 
+# Load the dataset within this code block 
+df = pd.read_csv("/content/sample_data/WA_Fn-UseC_-Telco-Customer-Churn.csv") # Replace with your actual file path 
+# Assuming 'performance' column exists in your DataFrame 'df' # If not, you might need to  
+recreate the performance column here def performance_category(iheart_rate_bpm): if  
+iheart_rate_bpm>=120: 
+ return "High" elif iheart_rate_bpm  
+>= 60: 
+ return "medium" else: 
+ return "Low" 
+df ["performance"] = df["MonthlyCharges"].apply(performance_category) # Recreate the  
+'performance' column 
+plt.figure(figsize=(8, 6)) 
+sns.countplot(x='performance', data=df)  
+plt.title('Performance Category Counts') 
+plt.xlabel('Performance Category') plt.ylabel('Count')  
+plt.show() !pip install ydata-profiling 
+import pandas as pd from ydata_profiling import  
+ProfileReport 
+df = pd.read_csv("/content/sample_data/WA_Fn-UseC_-Telco-Customer-Churn.csv") 
+profile = ProfileReport(df, explorative=True) # Define profile here before attempting to use it. 
+profile.to_notebook_iframe() profile.to_file("ritanic_report.html") 
